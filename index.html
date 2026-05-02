@@ -7,7 +7,7 @@
   <meta name="description" content="Three-day hands-on training on protein, fat and dietary fibre estimation. Department of Nutrition, Belda College, in collaboration with Borosil Scientific. Instruments supported through the WBDSTBT BOOST grant. Registration ₹500." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -125,17 +125,21 @@
           </select>
         </label>
 
-        <label>Dietary preference (for catering)
-          <select name="diet">
+        <label>Meal preference *
+          <span class="hint">Lunch and tea are provided on both training days. Pick the closest match; flag specific allergies in the notes box below.</span>
+          <select name="diet" required>
+            <option value="">Select…</option>
             <option>Vegetarian</option>
-            <option>Non-vegetarian</option>
+            <option>Vegetarian (no onion / no garlic)</option>
+            <option>Eggetarian (eggs &amp; dairy)</option>
+            <option>Non-vegetarian (chicken / fish)</option>
             <option>Jain</option>
             <option>Vegan</option>
           </select>
         </label>
 
-        <label>Special requirements / accessibility
-          <textarea name="notes" rows="2" placeholder="Optional"></textarea>
+        <label>Allergies, accessibility or other notes
+          <textarea name="notes" rows="3" placeholder="e.g. lactose intolerance, peanut allergy, wheelchair access, hostel needed"></textarea>
         </label>
 
         <label class="chk">

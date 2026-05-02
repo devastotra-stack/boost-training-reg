@@ -12,8 +12,34 @@
   --shadow:  0 12px 40px rgba(40, 20, 10, .15);
   --radius:   18px;
   --r-sm:     10px;
-  --serif: "Fraunces", Georgia, serif;
-  --sans:  "Inter", system-ui, -apple-system, sans-serif;
+  --serif: "Instrument Serif", "Fraunces", Georgia, serif;
+  --serif-alt: "Fraunces", Georgia, serif;
+  --sans:  "Inter Tight", "Inter", system-ui, -apple-system, sans-serif;
+  --ease:  cubic-bezier(.2,.7,.2,1);
+}
+
+/* ---- motion ---- */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(.97); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .stagger > * { opacity: 0; animation: fadeUp .9s var(--ease) forwards; }
+  .stagger > *:nth-child(1) { animation-delay: .05s; }
+  .stagger > *:nth-child(2) { animation-delay: .15s; }
+  .stagger > *:nth-child(3) { animation-delay: .25s; }
+  .stagger > *:nth-child(4) { animation-delay: .35s; }
+  .stagger > *:nth-child(5) { animation-delay: .45s; }
+  .stagger > *:nth-child(6) { animation-delay: .55s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
 }
 
 * { box-sizing: border-box; }
@@ -34,8 +60,10 @@ img { max-width: 100%; display: block; }
 a { color: var(--accent-d); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: -.01em; line-height: 1.15; margin: 0; overflow-wrap: break-word; }
-h1 em { font-style: italic; color: var(--accent); }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -.02em; line-height: 1.05; margin: 0; overflow-wrap: break-word; }
+h1 { font-weight: 400; }
+h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.about h2, .schedule h2, .inst-head h2 { font-family: var(--serif-alt); font-weight: 600; letter-spacing: -.01em; line-height: 1.15; }
 
 /* ===== Topbar ===== */
 .topbar {
@@ -43,8 +71,15 @@ h1 em { font-style: italic; color: var(--accent); }
   padding: 18px 32px;
   position: sticky; top: 0; z-index: 30;
   background: rgba(246, 239, 230, .92);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: box-shadow .3s var(--ease), border-color .3s var(--ease), padding .3s var(--ease);
+}
+.topbar.scrolled {
+  box-shadow: 0 6px 24px rgba(40,20,10,.08);
+  border-bottom-color: var(--line);
+  padding: 12px 32px;
 }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; }
 .logo-mark {
@@ -87,7 +122,7 @@ h1 em { font-style: italic; color: var(--accent); }
   background: var(--accent-l); padding: 6px 12px; border-radius: 999px;
   margin-bottom: 18px;
 }
-.hero-copy h1 { font-size: clamp(28px, 5.2vw, 56px); margin-bottom: 18px; }
+.hero-copy h1 { font-size: clamp(36px, 6.5vw, 72px); margin-bottom: 20px; letter-spacing: -.025em; }
 .lede { font-size: 17px; color: var(--ink-dim); max-width: 560px; }
 
 .meta-list {
@@ -138,6 +173,10 @@ h1 em { font-style: italic; color: var(--accent); }
 #regForm label {
   display: block; font-size: 13px; font-weight: 500; color: var(--ink-dim);
   margin-bottom: 14px;
+}
+#regForm .hint {
+  display: block; font-size: 12px; font-weight: 400; color: var(--ink-dim);
+  opacity: .85; margin-top: 3px; margin-bottom: 4px; line-height: 1.45;
 }
 #regForm input, #regForm select, #regForm textarea {
   display: block; width: 100%; margin-top: 6px;
@@ -295,12 +334,15 @@ h1 em { font-style: italic; color: var(--accent); }
   display: grid; place-items: center;
   padding: 18px;
   border-bottom: 1px solid var(--line);
+  overflow: hidden;
 }
 .inst-photo img {
   max-height: 100%; max-width: 100%;
   width: auto; height: auto;
   object-fit: contain;
+  transition: transform .6s var(--ease);
 }
+.inst-card:hover .inst-photo img { transform: scale(1.06); }
 .inst-body { padding: 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .inst-tag {
   display: inline-block; align-self: flex-start;

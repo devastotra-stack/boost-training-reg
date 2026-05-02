@@ -42,7 +42,7 @@ function collect() {
 function validate(data) {
   const errs = [];
   // required text/select fields
-  ["name","email","phone","role","institution","city","experience"].forEach(k => {
+  ["name","email","phone","role","institution","city","experience","diet"].forEach(k => {
     const el = form.elements[k];
     if (!data[k] || !data[k].trim()) {
       errs.push(k);
@@ -147,3 +147,53 @@ function escapeHtml(s) {
     { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]
   ));
 }
+
+/* ============================================================
+   Motion: scroll-reveal sections + topbar shadow + count-up
+   ============================================================ */
+(function () {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // Mark reveal targets
+  document.querySelectorAll(".about-grid, .partners-row, .inst-card, .schedule table, .speaker-card")
+    .forEach(el => el.classList.add("reveal"));
+
+  // Intersection observer
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    }
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  // Hero stagger — apply once at load
+  const heroCopy = document.querySelector(".hero-copy");
+  if (heroCopy) heroCopy.classList.add("stagger");
+
+  // Topbar shadow on scroll
+  const bar = document.querySelector(".topbar");
+  const onScroll = () => bar.classList.toggle("scrolled", window.scrollY > 8);
+  document.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Count-up "25 seats"
+  const seats = document.querySelector('.meta-list li:last-child strong');
+  if (seats && /^\d+/.test(seats.textContent)) {
+    const target = parseInt(seats.textContent, 10);
+    const suffix = seats.textContent.replace(/^\d+/, '');
+    seats.textContent = '0' + suffix;
+    const obs = new IntersectionObserver((entries, o) => {
+      if (!entries[0].isIntersecting) return;
+      o.disconnect();
+      const dur = 900, t0 = performance.now();
+      const tick = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        seats.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.6 });
+    obs.observe(seats);
+  }
+})();
