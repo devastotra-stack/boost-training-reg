@@ -25,3 +25,8 @@ dist/
 
 # Unused asset (downloaded for reference, not in page)
 assets/kj-group.png
+
+# Apps Script working dir (clasp credentials should never be committed)
+apps_script/
+# Clasp local creds
+.clasprc.json

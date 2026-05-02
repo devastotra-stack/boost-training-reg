@@ -60,7 +60,17 @@ Search for `REPLACE_ME` across the repo. Hits are in:
 - Name it `BOOST Training Registrations`
 - Copy the Sheet ID from the URL: `docs.google.com/spreadsheets/d/`**`<THIS_PART>`**`/edit`
 
-### 2. Set up Apps Script backend
+### Quick path: one-shot automation
+
+```bash
+# Pre-req (one-time, in browser):
+# https://script.google.com/home/usersettings → toggle Apps Script API ON
+bash scripts/deploy_backend.sh
+# Follow the prompt for clasp login (browser OAuth), then click Run > setup_ in
+# the script editor URL it prints. Done — backend wired, app.js patched, pushed.
+```
+
+### 2. Set up Apps Script backend (manual path — only if automation fails)
 - In the Sheet: **Extensions → Apps Script**
 - Delete the default `Code.gs` content; paste the contents of this repo's `Code.gs`
 - Edit the CONFIG block at the top:
