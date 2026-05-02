@@ -42,7 +42,7 @@ function collect() {
 function validate(data) {
   const errs = [];
   // required text/select fields
-  ["name","email","phone","role","institution","city","experience","diet"].forEach(k => {
+  ["name","email","phone","role","institution","city","experience"].forEach(k => {
     const el = form.elements[k];
     if (!data[k] || !data[k].trim()) {
       errs.push(k);
