@@ -122,7 +122,7 @@ function jsonOut(obj) {
 }
 
 function sendUserMail_(body) {
-  const subject = "Registration received — Belda College / Borosil Instrument Training";
+  const subject = "Registration received: Belda College / Borosil Instrument Training";
   const text =
 `Dear ${body.name},
 
@@ -153,7 +153,7 @@ Training Coordination Team`;
 }
 
 function sendOrganiserMail_(body) {
-  const subject = "[BOOST training] New registration — " + body.name;
+  const subject = "[BOOST training] New registration: " + body.name;
   const text =
 `New registration received.
 

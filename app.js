@@ -124,7 +124,7 @@ function showThanks(data) {
          Dietary Fibre Estimation has been logged.</p>
       <p>A confirmation email will follow at
          <strong>${escapeHtml(data.email)}</strong> within 24 hours.</p>
-      <p>Save these dates: <strong>18&ndash;19 May 2026</strong>.
+      <p>Save these dates: <strong>18-19 May 2026</strong>.
          Bring a lab coat and a notebook.</p>
     </div>
     <button type="button" class="submit-btn" onclick="location.reload()">Register another participant</button>
@@ -168,7 +168,7 @@ function escapeHtml(s) {
       const parts = Object.keys(s).map(k => `${s[k].available}/${s[k].cap} ${labels[k]||k}`);
       const total = Object.values(s).reduce((a,b)=>a+b.available,0);
       const cap = Object.values(s).reduce((a,b)=>a+b.cap,0);
-      seatLine.innerHTML = `Seats: <strong>${total}/${cap} left</strong> &mdash; ${parts.join(' &middot; ')}`;
+      seatLine.innerHTML = `Seats: <strong>${total}/${cap} left</strong>. ${parts.join(' &middot; ')}`;
     }
 
     // Disable dropdown options for full categories
@@ -177,7 +177,7 @@ function escapeHtml(s) {
       [...sel.options].forEach(opt => {
         if (s[opt.value] && s[opt.value].available <= 0) {
           opt.disabled = true;
-          opt.textContent = opt.textContent.replace(/\s*\(.*?\)\s*$/, '') + ' — FULL';
+          opt.textContent = opt.textContent.replace(/\s*\(.*?\)\s*$/, '') + ' (FULL)';
         }
       });
     }
