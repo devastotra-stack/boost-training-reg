@@ -9,13 +9,12 @@ const SHEET_ID = "REPLACE_ME_SPREADSHEET_ID";   // open Sheet → URL → /d/<th
 const SHEET_TAB = "Registrations";
 const NOTIFY_EMAIL = "devastotrapoddar@beldacollege.ac.in"; // gets a copy on each registration; "" to disable
 const SEND_USER_CONFIRMATION = true;            // email registrant a "received" note
-const TRAINING_DATES = "12-13 May 2026";        // shown in confirmation mail
+const TRAINING_DATES = "18-19 May 2026";        // shown in confirmation mail
 const TRAINING_VENUE = "Belda College, Paschim Medinipur";
 
 // Per-category seat caps. Reject doPost when cap met for the requested role.
 const SEAT_CAPS = {
   "Teacher":  20,
-  "UG-Belda": 20,
   "PhD":      10
 };
 
@@ -39,12 +38,12 @@ function doPost(e) {
     // category cap check
     const cap = SEAT_CAPS[body.role];
     if (typeof cap !== "number") {
-      return jsonOut({ ok: false, error: "Invalid category. Pick Teacher, UG-Belda or PhD." });
+      return jsonOut({ ok: false, error: "Invalid category. Pick Teacher or PhD." });
     }
     const sheet = openSheet_();
     const used = countCategory_(sheet, body.role);
     if (used >= cap) {
-      const labels = { "Teacher":"Teacher / Faculty", "UG-Belda":"UG (Belda College)", "PhD":"PhD scholar" };
+      const labels = { "Teacher":"Teacher / Faculty", "PhD":"PhD scholar" };
       return jsonOut({ ok: false, error: `${labels[body.role]} seats are full (${cap}/${cap}). Please contact the organisers to join the waitlist.` });
     }
 

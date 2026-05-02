@@ -124,7 +124,7 @@ function showThanks(data) {
          Dietary Fibre Estimation has been logged.</p>
       <p>A confirmation email will follow at
          <strong>${escapeHtml(data.email)}</strong> within 24 hours.</p>
-      <p>Save these dates: <strong>12&ndash;13 May 2026</strong>.
+      <p>Save these dates: <strong>18&ndash;19 May 2026</strong>.
          Bring a lab coat and a notebook.</p>
     </div>
     <button type="button" class="submit-btn" onclick="location.reload()">Register another participant</button>
@@ -160,7 +160,7 @@ function escapeHtml(s) {
     const data = await res.json();
     if (!data.seats) return;
     const s = data.seats;
-    const labels = { "Teacher":"teachers", "UG-Belda":"Belda UG", "PhD":"PhD" };
+    const labels = { "Teacher":"teachers", "PhD":"PhD" };
 
     // Update hero meta line
     const seatLine = document.querySelector('.meta-list li:last-child span');
@@ -212,7 +212,7 @@ function escapeHtml(s) {
   document.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  // Count-up "25 seats"
+  // Count-up "30 total"
   const seats = document.querySelector('.meta-list li:last-child strong');
   if (seats && /^\d+/.test(seats.textContent)) {
     const target = parseInt(seats.textContent, 10);
