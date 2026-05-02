@@ -7,7 +7,7 @@
 // ---- CONFIG (edit these) ----
 const SHEET_ID = "REPLACE_ME_SPREADSHEET_ID";   // open Sheet → URL → /d/<this>/edit
 const SHEET_TAB = "Registrations";
-const NOTIFY_EMAIL = "REPLACE_ME_ORGANISER_EMAIL@example.com"; // gets a copy on each registration; "" to disable
+const NOTIFY_EMAIL = "devastotrapoddar@beldacollege.ac.in"; // gets a copy on each registration; "" to disable
 const SEND_USER_CONFIRMATION = true;            // email registrant a "received" note
 const TRAINING_DATES = "12-13 May 2026";        // shown in confirmation mail
 const TRAINING_VENUE = "Belda College, Paschim Medinipur";
