@@ -150,11 +150,19 @@ h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
   margin-bottom: 12px;
 }
 .speaker-row { display: flex; align-items: center; gap: 14px; }
+.speaker-stack { display: flex; flex: none; }
+.speaker-stack .speaker-photo + .speaker-photo { margin-left: -14px; }
 .speaker-photo {
   width: 56px; height: 56px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent-l), var(--accent));
-  display: grid; place-items: center; font-size: 11px; color: var(--paper);
+  display: grid; place-items: center;
+  font-family: var(--serif); font-weight: 600; font-size: 22px;
+  color: var(--paper); letter-spacing: 0.5px;
   flex: none;
+  box-shadow: 0 0 0 2px var(--paper);
+}
+.speaker-photo--alt {
+  background: linear-gradient(135deg, #6c8c5c, #4f7048);
 }
 .speaker-name { font-family: var(--serif); font-weight: 600; font-size: 17px; }
 .speaker-role { font-size: 13px; color: var(--ink-dim); }
