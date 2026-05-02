@@ -35,9 +35,10 @@ if ! command -v clasp >/dev/null 2>&1; then
   ok "clasp installed: $(clasp --version 2>&1 | tail -1)"
 fi
 
-# JSON helper using Node (avoids jq dependency)
-jread() { node -e "process.stdout.write((require('$1')[\"$2\"]||'').toString())"; }
-jread_first() { node -e "const v=require('$1')[\"$2\"]; process.stdout.write(Array.isArray(v)?(v[0]||''):(v||''))"; }
+# JSON helper using Node (avoids jq dependency). Use fs.readFileSync to dodge
+# Windows-path quirks in require().
+jread() { node -e "const j=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));process.stdout.write((j[process.argv[2]]||'').toString())" "$1" "$2"; }
+jread_first() { node -e "const j=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));const v=j[process.argv[2]];process.stdout.write(Array.isArray(v)?(v[0]||''):(v||''))" "$1" "$2"; }
 
 [[ -f index.html && -f Code.gs && -f app.js ]] || die "run from repo root"
 
