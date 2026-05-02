@@ -54,7 +54,7 @@
         </li>
         <li>
           <svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
-          <span>Seats: <strong>25 only</strong> (first registered, first allotted)</span>
+          <span>Seats: <strong>50 total</strong> &mdash; 20 teachers, 20 Belda UG, 10 PhD</span>
         </li>
       </ul>
 
@@ -88,15 +88,13 @@
           <input type="tel" name="phone" required pattern="[0-9+\- ]{8,15}" placeholder="+91 9XXXXXXXXX" />
         </label>
 
-        <label>Designation / Role *
+        <label>Category *
+          <span class="hint">Eligibility is capped: 20 teachers, 20 UG students of Belda College, 10 PhD scholars. First registered, first allotted within each category.</span>
           <select name="role" required>
             <option value="">Select…</option>
-            <option>Student (UG/PG)</option>
-            <option>Research Scholar (PhD)</option>
-            <option>Faculty</option>
-            <option>Lab Technician</option>
-            <option>Industry R&amp;D</option>
-            <option>Other</option>
+            <option value="Teacher">Teacher / Faculty (20 seats)</option>
+            <option value="UG-Belda">UG student &mdash; Belda College only (20 seats)</option>
+            <option value="PhD">PhD scholar (10 seats)</option>
           </select>
         </label>
 

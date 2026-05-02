@@ -149,6 +149,42 @@ function escapeHtml(s) {
 }
 
 /* ============================================================
+   Live seat counts — fetch backend GET on load, update hero meta
+   + disable form options for full categories
+   ============================================================ */
+(async function loadSeats() {
+  if (APPS_SCRIPT_URL.includes("REPLACE_ME")) return;
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, { method: "GET" });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data.seats) return;
+    const s = data.seats;
+    const labels = { "Teacher":"teachers", "UG-Belda":"Belda UG", "PhD":"PhD" };
+
+    // Update hero meta line
+    const seatLine = document.querySelector('.meta-list li:last-child span');
+    if (seatLine) {
+      const parts = Object.keys(s).map(k => `${s[k].available}/${s[k].cap} ${labels[k]||k}`);
+      const total = Object.values(s).reduce((a,b)=>a+b.available,0);
+      const cap = Object.values(s).reduce((a,b)=>a+b.cap,0);
+      seatLine.innerHTML = `Seats: <strong>${total}/${cap} left</strong> &mdash; ${parts.join(' &middot; ')}`;
+    }
+
+    // Disable dropdown options for full categories
+    const sel = document.querySelector('select[name="role"]');
+    if (sel) {
+      [...sel.options].forEach(opt => {
+        if (s[opt.value] && s[opt.value].available <= 0) {
+          opt.disabled = true;
+          opt.textContent = opt.textContent.replace(/\s*\(.*?\)\s*$/, '') + ' — FULL';
+        }
+      });
+    }
+  } catch (e) { /* silent — degrade to static text */ }
+})();
+
+/* ============================================================
    Motion: scroll-reveal sections + topbar shadow + count-up
    ============================================================ */
 (function () {

@@ -12,6 +12,13 @@ const SEND_USER_CONFIRMATION = true;            // email registrant a "received"
 const TRAINING_DATES = "12-13 May 2026";        // shown in confirmation mail
 const TRAINING_VENUE = "Belda College, Paschim Medinipur";
 
+// Per-category seat caps. Reject doPost when cap met for the requested role.
+const SEAT_CAPS = {
+  "Teacher":  20,
+  "UG-Belda": 20,
+  "PhD":      10
+};
+
 const HEADERS = [
   "submitted_at","name","email","phone","role","institution","city",
   "instruments","experience","diet","notes",
@@ -25,11 +32,22 @@ function doPost(e) {
     const body = JSON.parse(e.postData.contents);
 
     // basic guard
-    if (!body || !body.name || !body.email) {
+    if (!body || !body.name || !body.email || !body.role) {
       return jsonOut({ ok: false, error: "Missing required fields" });
     }
 
+    // category cap check
+    const cap = SEAT_CAPS[body.role];
+    if (typeof cap !== "number") {
+      return jsonOut({ ok: false, error: "Invalid category. Pick Teacher, UG-Belda or PhD." });
+    }
     const sheet = openSheet_();
+    const used = countCategory_(sheet, body.role);
+    if (used >= cap) {
+      const labels = { "Teacher":"Teacher / Faculty", "UG-Belda":"UG (Belda College)", "PhD":"PhD scholar" };
+      return jsonOut({ ok: false, error: `${labels[body.role]} seats are full (${cap}/${cap}). Please contact the organisers to join the waitlist.` });
+    }
+
     const row = HEADERS.map(h => {
       if (h === "status") return "REGISTERED";
       return body[h] !== undefined ? body[h] : "";
@@ -46,10 +64,39 @@ function doPost(e) {
 }
 
 function doGet() {
-  // health check; visiting the URL in browser shows status
-  return ContentService
-    .createTextOutput(JSON.stringify({ ok: true, service: "boost-training-reg", time: new Date() }))
-    .setMimeType(ContentService.MimeType.JSON);
+  // health check + live seat counts; safe to call from anywhere
+  try {
+    const sheet = openSheet_();
+    const seats = {};
+    for (const role of Object.keys(SEAT_CAPS)) {
+      const used = countCategory_(sheet, role);
+      seats[role] = { used: used, cap: SEAT_CAPS[role], available: Math.max(0, SEAT_CAPS[role] - used) };
+    }
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true, service: "boost-training-reg", time: new Date(), seats: seats }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true, service: "boost-training-reg", time: new Date(), seats_error: String(err) }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// Count rows where role matches AND status is not REJECTED/WAITLIST.
+// CONFIRMED + REGISTERED both consume a seat.
+function countCategory_(sheet, role) {
+  const last = sheet.getLastRow();
+  if (last < 2) return 0;
+  const roleCol = HEADERS.indexOf("role") + 1;       // 1-indexed
+  const statusCol = HEADERS.indexOf("status") + 1;
+  const data = sheet.getRange(2, 1, last - 1, HEADERS.length).getValues();
+  let n = 0;
+  for (const r of data) {
+    const rowRole = String(r[roleCol - 1] || "").trim();
+    const rowStatus = String(r[statusCol - 1] || "").trim().toUpperCase();
+    if (rowRole === role && rowStatus !== "REJECTED" && rowStatus !== "WAITLIST") n++;
+  }
+  return n;
 }
 
 // ---- Helpers ----
