@@ -16,10 +16,24 @@ warn() { printf "${YELLOW}[warn]${NC} %s\n" "$*"; }
 die()  { printf "${RED}[FAIL]${NC} %s\n" "$*" >&2; exit 1; }
 
 # --- preflight ---
-command -v clasp >/dev/null || die "clasp missing — npm i -g @google/clasp"
-command -v node  >/dev/null || die "node missing"
+command -v node  >/dev/null || die "node missing — install Node.js LTS from https://nodejs.org"
+command -v npm   >/dev/null || die "npm missing — comes with Node; reinstall Node.js"
 command -v git   >/dev/null || die "git missing"
 command -v gh    >/dev/null || warn "gh missing — git push only, skip auto-deploy verify"
+
+# Auto-install clasp if missing
+if ! command -v clasp >/dev/null 2>&1; then
+  log "clasp not found. Installing @google/clasp globally (~30 s)…"
+  npm install -g @google/clasp 2>&1 | tail -3
+  hash -r 2>/dev/null || true
+  if ! command -v clasp >/dev/null 2>&1; then
+    # Maybe npm-prefix bin not on PATH (common on Windows). Try again with explicit npm prefix.
+    NPM_BIN="$(npm bin -g 2>/dev/null || npm prefix -g 2>/dev/null)"
+    [[ -d "$NPM_BIN" ]] && export PATH="$NPM_BIN:$PATH"
+    command -v clasp >/dev/null 2>&1 || die "clasp install succeeded but binary not on PATH. Open a new shell and rerun."
+  fi
+  ok "clasp installed: $(clasp --version 2>&1 | tail -1)"
+fi
 
 # JSON helper using Node (avoids jq dependency)
 jread() { node -e "process.stdout.write((require('$1')[\"$2\"]||'').toString())"; }
