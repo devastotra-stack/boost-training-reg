@@ -138,11 +138,14 @@ Dates: ${TRAINING_DATES}
 Venue: ${TRAINING_VENUE}
 Instruments selected: ${body.instruments}
 
-Registration fee: Rs 200 per participant, payable in cash at the
-registration desk on Day 1 (18 May 2026, 09:30 IST). Receipt issued
-on the spot. No online payment required at this stage.
+Registration fee: Rs 200 per participant. Online payment details
+(UPI handle / bank transfer link) will be shared with you separately
+by email and WhatsApp within 24 hours. Your seat is confirmed only
+after the payment is received and verified.
 
-Please bring a lab coat, safety goggles, a notebook, and Rs 200 cash.
+Please bring a lab coat, safety goggles and a notebook on Day 1.
+Carry the payment confirmation / screenshot for cross-checking at
+the registration desk.
 
 If you did not initiate this registration, reply to this mail.
 
