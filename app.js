@@ -125,7 +125,8 @@ function showThanks(data) {
       <p>A confirmation email will follow at
          <strong>${escapeHtml(data.email)}</strong> within 24 hours.</p>
       <p>Save these dates: <strong>18-19 May 2026</strong>.
-         Bring a lab coat and a notebook.</p>
+         Bring a lab coat, a notebook, and <strong>Rs 200 cash</strong>
+         for the registration fee (payable at the desk on Day 1).</p>
     </div>
     <button type="button" class="submit-btn" onclick="location.reload()">Register another participant</button>
   `;

@@ -138,7 +138,11 @@ Dates: ${TRAINING_DATES}
 Venue: ${TRAINING_VENUE}
 Instruments selected: ${body.instruments}
 
-Please bring a lab coat, safety goggles and a notebook.
+Registration fee: Rs 200 per participant, payable in cash at the
+registration desk on Day 1 (18 May 2026, 09:30 IST). Receipt issued
+on the spot. No online payment required at this stage.
+
+Please bring a lab coat, safety goggles, a notebook, and Rs 200 cash.
 
 If you did not initiate this registration, reply to this mail.
 
