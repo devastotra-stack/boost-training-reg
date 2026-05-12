@@ -9,7 +9,7 @@ const SHEET_ID = "REPLACE_ME_SPREADSHEET_ID";   // open Sheet → URL → /d/<th
 const SHEET_TAB = "Registrations";
 const NOTIFY_EMAIL = "devastotrapoddar@beldacollege.ac.in"; // gets a copy on each registration; "" to disable
 const SEND_USER_CONFIRMATION = true;            // email registrant a "received" note
-const TRAINING_DATES = "18-19 May 2026";        // shown in confirmation mail
+const TRAINING_DATES = "19-20 May 2026";        // shown in confirmation mail
 const TRAINING_VENUE = "Belda College, Paschim Medinipur";
 
 // Per-category seat caps. Reject doPost when cap met for the requested role.
