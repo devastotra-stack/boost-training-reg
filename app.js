@@ -5,7 +5,7 @@
    ============================================================ */
 
 // REPLACE_ME: paste the Apps Script Web App /exec URL after deploy
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLL80-USvZf3fCFKvPgv6y3qkx_sZCP7aCMiF5Kgq1GmBsxSuWO6WtFy0Lv5pFe_Wj/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVeXwHQywCBBAMrXBIjGaC8PY4NQyn2teiakvTknw2CS4S1a1h7IP_c5QwNfE_FRAT/exec";
 
 const form     = document.getElementById("regForm");
 const status   = document.getElementById("formStatus");
